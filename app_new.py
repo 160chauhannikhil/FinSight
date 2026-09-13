@@ -182,15 +182,19 @@ def fetch_live_data(ticker):
         return None
 
 def get_company_data(company_name, ticker):
-    live = fetch_live_data(ticker)
-    if live and live.get("revenue"):
-        return live, "live"
+    # Try fallback first on cloud (Yahoo Finance blocked)
     fallback = FALLBACK_DATA.get(company_name)
     if fallback:
         return fallback, "fallback"
+    # Try live data
+    live = fetch_live_data(ticker)
+    if live and live.get("revenue"):
+        return live, "live"
+    # Try alpha vantage
     alpha = fetch_alpha_vantage(ticker)
     if alpha and alpha.get("revenue"):
         return alpha, "live"
+    return None, "none"
     # Try with different headers for cloud deployment
     try:
         import yfinance as yf
@@ -713,7 +717,7 @@ if page == "📊 Dashboard":
             with col:
                 st.markdown(f"<div class='kpi-card' style='text-align:center; padding:16px;'><div class='kpi-label'>{label}</div><div style='font-size:18px; font-weight:700; color:{color}; margin-top:6px;'>{val}</div></div>", unsafe_allow_html=True)
     else:
-        st.markdown("<div class='warning-box'>⚠️ Could not fetch live data. Try another company.</div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='warning-box'>⚠️ Could not fetch live data for '{selected_company}'. Try: Infosys Ltd, TCS, Reliance Industries Ltd</div>", unsafe_allow_html=True)
 
 # CRISIS SIMULATOR
 elif page == "⚡ Crisis Simulator":
