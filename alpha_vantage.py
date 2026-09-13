@@ -1,4 +1,4 @@
-content = '''
+
 import requests
 
 ALPHA_VANTAGE_KEY = "1XC74SBV27YOO89K"
@@ -57,8 +57,3 @@ def fetch_alpha_vantage(ticker):
         }
     except Exception as e:
         return None
-'''
-
-with open('alpha_vantage.py', 'w', encoding='utf-8') as f:
-    f.write(content)
-print('alpha_vantage.py created')

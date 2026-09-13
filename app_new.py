@@ -6,6 +6,7 @@ import pandas as pd
 import numpy as np
 import os
 from fallback_data import FALLBACK_DATA, INDUSTRY_BENCHMARKS
+from alpha_vantage import fetch_alpha_vantage
 from predict import predict_stock_price
 from export_pdf import generate_pdf_report
 
@@ -187,6 +188,9 @@ def get_company_data(company_name, ticker):
     fallback = FALLBACK_DATA.get(company_name)
     if fallback:
         return fallback, "fallback"
+    alpha = fetch_alpha_vantage(ticker)
+    if alpha and alpha.get("revenue"):
+        return alpha, "live"
     # Try with different headers for cloud deployment
     try:
         import yfinance as yf
