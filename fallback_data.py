@@ -5,6 +5,7 @@ FALLBACK_DATA = {
         "total_debt": 24, "cash": 8953, "capex": 180,
         "market_cap": 180000, "pe_ratio": 195.0, "pb_ratio": 8.2,
         "dividend_yield": 0.0, "roe": 4.2, "sector": "Consumer Cyclical",
+        "current_price": 220, "52w_high": 280, "52w_low": 180,
     },
     "HDFC Bank Ltd": {
         "revenue": 98710, "gross_profit": 47240, "ebitda": 47240,
@@ -13,6 +14,7 @@ FALLBACK_DATA = {
         "market_cap": 1050000, "pe_ratio": 17.2, "pb_ratio": 2.1,
         "dividend_yield": 1.2, "roe": 16.5, "sector": "Financial Services",
         "net_interest_income": 89657, "operating_profit": 44800,
+        "current_price": 1650, "52w_high": 1880, "52w_low": 1400,
     },
     "ICICI Bank Ltd": {
         "revenue": 78620, "gross_profit": 38940, "ebitda": 38940,
@@ -21,6 +23,7 @@ FALLBACK_DATA = {
         "market_cap": 780000, "pe_ratio": 17.6, "pb_ratio": 3.1,
         "dividend_yield": 0.8, "roe": 18.2, "sector": "Financial Services",
         "net_interest_income": 63651, "operating_profit": 36500,
+        "current_price": 1120, "52w_high": 1280, "52w_low": 950,
     },
     "Axis Bank Ltd": {
         "revenue": 88067, "gross_profit": 35650, "ebitda": 35650,
@@ -29,6 +32,7 @@ FALLBACK_DATA = {
         "market_cap": 387933, "pe_ratio": 14.03, "pb_ratio": 1.8,
         "dividend_yield": 0.1, "roe": 17.3, "sector": "Financial Services",
         "net_interest_income": 47614, "operating_profit": 33200,
+        "current_price": 1180, "52w_high": 1340, "52w_low": 980,
     },
     "State Bank of India": {
         "revenue": 395693, "gross_profit": 152000, "ebitda": 152000,
@@ -37,23 +41,8 @@ FALLBACK_DATA = {
         "market_cap": 690000, "pe_ratio": 11.3, "pb_ratio": 1.4,
         "dividend_yield": 1.8, "roe": 20.3, "sector": "Financial Services",
         "net_interest_income": 153765, "operating_profit": 142000,
+        "current_price": 780, "52w_high": 912, "52w_low": 680,
     },
-    "Paytm": {
-        "revenue": 9978, "gross_profit": 5468, "ebitda": -624,
-        "ebit": -890, "net_income": -1422, "total_assets": 14832,
-        "total_debt": 180, "cash": 8626, "capex": 420,
-        "market_cap": 32000, "pe_ratio": None, "pb_ratio": 2.1,
-        "dividend_yield": 0.0, "roe": -12.4, "sector": "Technology",
-    },
-    "Nykaa": {
-        "revenue": 6386, "gross_profit": 1756, "ebitda": 213,
-        "ebit": 124, "net_income": 40, "total_assets": 4218,
-        "total_debt": 96, "cash": 892, "capex": 180,
-        "market_cap": 38000, "pe_ratio": 890.0, "pb_ratio": 12.4,
-        "dividend_yield": 0.0, "roe": 1.8, "sector": "Consumer Cyclical",
-    },
-}
-
     "Infosys Ltd": {
         "revenue": 2016, "gross_profit": 608, "ebitda": 511,
         "ebit": 455, "net_income": 331, "total_assets": 1645,
@@ -124,8 +113,8 @@ FALLBACK_DATA = {
         "total_debt": 28000, "cash": 2800, "capex": 120,
         "market_cap": 420000, "pe_ratio": 28.4, "pb_ratio": 5.2,
         "dividend_yield": 0.4, "roe": 21.8, "sector": "Financial Services",
-        "current_price": 6800, "52w_high": 8000, "52w_low": 6000,
         "net_interest_income": 3800, "operating_profit": 3500,
+        "current_price": 6800, "52w_high": 8000, "52w_low": 6000,
     },
     "Oil & Natural Gas Corporation Ltd": {
         "revenue": 6800, "gross_profit": 2100, "ebitda": 1850,
@@ -135,6 +124,7 @@ FALLBACK_DATA = {
         "dividend_yield": 4.8, "roe": 14.2, "sector": "Energy",
         "current_price": 220, "52w_high": 285, "52w_low": 195,
     },
+}
 
 INDUSTRY_BENCHMARKS = {
     "IT Services": {
@@ -165,7 +155,7 @@ INDUSTRY_BENCHMARKS = {
     "Pharma": {
         "avg_ebitda_margin": 20.0, "avg_pe": 32.0, "avg_roe": 16.0,
         "avg_debt_equity": 0.12, "avg_current_ratio": 2.1,
-        "top_companies": ["Sun Pharma", "Dr Reddy", "Cipla", "Divi's"],
+        "top_companies": ["Sun Pharma", "Dr Reddy", "Cipla", "Divi s"],
     },
     "Manufacturing": {
         "avg_ebitda_margin": 14.0, "avg_pe": 18.0, "avg_roe": 12.0,
@@ -186,5 +176,15 @@ INDUSTRY_BENCHMARKS = {
         "avg_ebitda_margin": 16.0, "avg_pe": 22.0, "avg_roe": 10.0,
         "avg_debt_equity": 0.35, "avg_current_ratio": 1.4,
         "top_companies": ["Reliance", "Tata Group", "Adani Group"],
+    },
+    "Information Technology": {
+        "avg_ebitda_margin": 24.5, "avg_pe": 28.0, "avg_roe": 28.0,
+        "avg_debt_equity": 0.05, "avg_current_ratio": 2.8,
+        "top_companies": ["Infosys", "TCS", "Wipro", "HCL Tech"],
+    },
+    "Paints": {
+        "avg_ebitda_margin": 18.0, "avg_pe": 45.0, "avg_roe": 25.0,
+        "avg_debt_equity": 0.08, "avg_current_ratio": 1.8,
+        "top_companies": ["Asian Paints", "Berger Paints", "Kansai Nerolac"],
     },
 }
