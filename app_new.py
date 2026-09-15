@@ -580,7 +580,8 @@ with st.sidebar:
     <div style='text-align:center; padding:20px 0 16px;'>
         <div style='font-size:36px;'>⚡</div>
         <div style='font-size:20px; font-weight:800; color:#6366f1;'>FinSight</div>
-        <div style='font-size:11px; color:#475569; margin-top:4px; text-transform:uppercase; letter-spacing:0.08em;'>Financial Intelligence Platform</div>
+        <div style='font-size:12px; font-weight:600; color:#4f7aff; margin-top:2px;'>by Nikhil Singh</div>
+        <div style='font-size:10px; color:#475569; margin-top:4px; text-transform:uppercase; letter-spacing:0.08em;'>Financial Intelligence Platform</div>
     </div>
     """, unsafe_allow_html=True)
     st.divider()
