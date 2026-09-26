@@ -27,12 +27,14 @@ When a financial crisis hits a company — revenue crash, interest rate hike, ma
 ---
 
 ## 🚀 Live Demo
+## 🚀 Live Demo
 
-| Platform | URL | Status |
+| Platform | URL | Notes |
 |---|---|---|
-| **🌐 Landing Page** | [160chauhannikhil.github.io/FinSight](https://160chauhannikhil.github.io/FinSight/) | 🟢 Live |
-| **🚀 Streamlit App** | [finsight-gjcwxba4rp6y2b49hgkghf.streamlit.app](https://finsight-gjcwxba4rp6y2b49hgkghf.streamlit.app) | 🟢 Live |
-| **📂 GitHub** | [github.com/160chauhannikhil/FinSight](https://github.com/160chauhannikhil/FinSight) | 🟢 Public |
+| **🌐 Landing Page** | [160chauhannikhil.github.io/FinSight](https://160chauhannikhil.github.io/FinSight/) | Always live ✅ |
+| **📊 Streamlit App** | [finsight-gjcwxba4rp6y2b49hgkghf.streamlit.app](https://finsight-gjcwxba4rp6y2b49hgkghf.streamlit.app) | May take 60 sec to wake up ⏳ |
+| **💻 Run Locally** | Clone repo + pip install + streamlit run | All 500 companies live ✅ |
+| **📂 Source Code** | [github.com/160chauhannikhil/FinSight](https://github.com/160chauhannikhil/FinSight) | Full code ✅ |
 
 ---
 
