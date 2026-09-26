@@ -585,17 +585,26 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
     st.divider()
-    search_query = st.text_input("🔍 Search Company", placeholder="Type company name...")
-    if search_query:
-        matches = [name for name in COMPANIES.keys() if search_query.lower() in name.lower()][:20]
+    all_companies = list(COMPANIES.keys())
+    popular = ["Infosys Ltd.", "Tata Consultancy Services Ltd.", "Reliance Industries Ltd.", "HDFC Bank Ltd.", "ICICI Bank Ltd.", "Wipro Ltd.", "Zomato Ltd.", "Hindustan Unilever Ltd.", "Asian Paints Ltd.", "Bajaj Finance Ltd."]
+    available = [p for p in popular if p in COMPANIES]
+    remaining = [c for c in all_companies if c not in available]
+    ordered = available + remaining
+    search_query = st.text_input("🔍 Search Company", placeholder="Type to search 500 companies...")
+    if search_query and len(search_query) >= 1:
+        matches = [name for name in all_companies if search_query.lower() in name.lower()][:25]
         if matches:
-            selected_company = st.selectbox("Results", matches)
+            st.markdown(f"<div style='font-size:11px; color:#6366f1; margin-bottom:4px;'>Found {len(matches)} companies</div>", unsafe_allow_html=True)
+            selected_company = st.selectbox("Select Company", matches)
         else:
-            st.warning("No companies found")
-            selected_company = list(COMPANIES.keys())[0]
+            st.warning("No companies found. Try different keywords.")
+            selected_company = st.selectbox("Select Company", ordered)
     else:
-        top10 = list(COMPANIES.keys())[:10]
-        selected_company = st.selectbox("Select Company", top10)
+        st.markdown("<div style='font-size:11px; color:#64748b; margin-bottom:4px;'>Showing popular companies</div>", unsafe_allow_html=True)
+        selected_company = st.selectbox("Select Company", ordered)
+
+
+
     company_info = COMPANIES.get(selected_company, {"ticker": "", "industry": "N/A", "description": "N/A"})
     st.markdown(f"""
     <div style='background:rgba(99,102,241,0.08); border:1px solid rgba(99,102,241,0.2); border-radius:10px; padding:14px; margin:10px 0;'>
@@ -723,7 +732,23 @@ if page == "📊 Dashboard":
 # CRISIS SIMULATOR
 elif page == "⚡ Crisis Simulator":
     st.markdown("<div class='section-header'>⚡ Crisis Simulator</div>", unsafe_allow_html=True)
-    st.markdown("<div class='section-subheader'>Apply financial stresss and see real-time impact</div>", unsafe_allow_html=True)
+    st.markdown("""
+    <div style='background:rgba(99,102,241,0.08); border:1px solid rgba(99,102,241,0.2); border-radius:10px; padding:16px; margin-bottom:20px;'>
+        <div style='font-size:13px; color:#e2e8f0; font-weight:600; margin-bottom:8px;'>📖 What is Crisis Simulator?</div>
+        <div style='font-size:12px; color:#94a3b8; line-height:1.7;'>
+        Crisis Simulator lets you stress-test a company's financials under adverse scenarios. Use the sliders to simulate a financial shock — 
+        like a 30% revenue drop during a recession, or a 50% rise in costs due to inflation. The app instantly recalculates all financial metrics 
+        and shows you how the company's health changes. Use <b style='color:#6366f1;'>Industry Templates</b> to apply real-world crisis scenarios 
+        like COVID-19 Pandemic Shock or RBI Rate Hike Cycle with one click.
+        </div>
+        <div style='margin-top:10px; display:flex; gap:16px; flex-wrap:wrap;'>
+            <span style='font-size:11px; color:#10b981;'>✅ Revenue Stress — demand crash, recession</span>
+            <span style='font-size:11px; color:#10b981;'>✅ Cost Pressure — inflation, supply chain</span>
+            <span style='font-size:11px; color:#10b981;'>✅ Interest Rate Stress — RBI rate hikes</span>
+            <span style='font-size:11px; color:#10b981;'>✅ Debt Leverage Stress — additional borrowing</span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
     col_sliders, col_results = st.columns([1, 2])
 
@@ -789,7 +814,25 @@ elif page == "⚡ Crisis Simulator":
 # RESILIENCE LAB
 elif page == "🧪 Resilience Lab":
     st.markdown("<div class='section-header'>🧪 Resilience Lab</div>", unsafe_allow_html=True)
-    st.markdown("<div class='section-subheader'>Test management interventions and find the best recovery strategy</div>", unsafe_allow_html=True)
+    st.markdown("""
+    <div style='background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.2); border-radius:10px; padding:16px; margin-bottom:20px;'>
+        <div style='font-size:13px; color:#e2e8f0; font-weight:600; margin-bottom:8px;'>📖 What is Resilience Lab?</div>
+        <div style='font-size:12px; color:#94a3b8; line-height:1.7;'>
+        Resilience Lab tests 6 different management strategies and ranks which one gives the best financial recovery. 
+        Think of it as a <b style='color:#10b981;'>strategy simulator for CFOs</b> — instead of guessing which action to take during a crisis, 
+        FinSight calculates the exact impact of each intervention on the company's resilience score, EBITDA, and net income. 
+        The best strategy is automatically highlighted.
+        </div>
+        <div style='margin-top:10px; display:flex; gap:12px; flex-wrap:wrap;'>
+            <span style='font-size:11px; color:#10b981;'>✅ Cost Cutting</span>
+            <span style='font-size:11px; color:#10b981;'>✅ Working Capital Optimization</span>
+            <span style='font-size:11px; color:#10b981;'>✅ Debt Restructuring</span>
+            <span style='font-size:11px; color:#10b981;'>✅ Revenue Diversification</span>
+            <span style='font-size:11px; color:#10b981;'>✅ Asset Monetization</span>
+            <span style='font-size:11px; color:#10b981;'>✅ Emergency Equity Raise</span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
     if live:
         baseline = apply_stresss(live, {})
@@ -833,7 +876,25 @@ elif page == "🧪 Resilience Lab":
 # AI BOARDROOM
 elif page == "🤖 AI Boardroom":
     st.markdown("<div class='section-header'>🤖 AI Boardroom</div>", unsafe_allow_html=True)
-    st.markdown("<div class='section-subheader'>6 AI agents analyze, debate, and recommend the best strategy</div>", unsafe_allow_html=True)
+    st.markdown("""
+    <div style='background:rgba(139,92,246,0.08); border:1px solid rgba(139,92,246,0.2); border-radius:10px; padding:16px; margin-bottom:20px;'>
+        <div style='font-size:13px; color:#e2e8f0; font-weight:600; margin-bottom:8px;'>📖 What is AI Boardroom?</div>
+        <div style='font-size:12px; color:#94a3b8; line-height:1.7;'>
+        AI Boardroom simulates a <b style='color:#8b5cf6;'>virtual C-suite meeting</b> where 6 specialized AI agents — each with a different role — 
+        analyze the company's financial data and debate the best strategy. The CFO focuses on cash flow, the Risk Officer identifies threats, 
+        the Strategy Officer recommends growth moves, the Treasurer manages liquidity, the Challenger finds flaws, and the CEO synthesizes everything 
+        into a final action plan. <b style='color:#8b5cf6;'>You make the final human decision</b> — approve, reject, or request more analysis.
+        </div>
+        <div style='margin-top:10px; display:flex; gap:12px; flex-wrap:wrap;'>
+            <span style='font-size:11px; color:#8b5cf6;'>💼 CFO Agent</span>
+            <span style='font-size:11px; color:#ef4444;'>⚠️ Risk Agent</span>
+            <span style='font-size:11px; color:#8b5cf6;'>🎯 Strategy Agent</span>
+            <span style='font-size:11px; color:#06b6d4;'>🏦 Treasury Agent</span>
+            <span style='font-size:11px; color:#f59e0b;'>🔴 Challenger Agent</span>
+            <span style='font-size:11px; color:#10b981;'>👑 CEO Decision</span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
     if live:
         baseline = apply_stresss(live, {})
@@ -865,7 +926,16 @@ elif page == "🤖 AI Boardroom":
 # COUNTERFACTUAL
 elif page == "🔄 Counterfactual":
     st.markdown("<div class='section-header'>🔄 Counterfactual Analysis</div>", unsafe_allow_html=True)
-    st.markdown("<div class='section-subheader'>Compare alternative strategies side by side</div>", unsafe_allow_html=True)
+    st.markdown("""
+    <div style='background:rgba(6,182,212,0.08); border:1px solid rgba(6,182,212,0.2); border-radius:10px; padding:16px; margin-bottom:20px;'>
+        <div style='font-size:13px; color:#e2e8f0; font-weight:600; margin-bottom:8px;'>📖 What is Counterfactual Analysis?</div>
+        <div style='font-size:12px; color:#94a3b8; line-height:1.7;'>
+        Counterfactual Analysis answers the question: <b style='color:#06b6d4;'>"What would have happened if we had chosen a different strategy?"</b> 
+        Set up two different scenarios — Strategy A (e.g. cut costs, accept revenue decline) vs Strategy B (e.g. invest in growth despite higher costs) — 
+        and FinSight compares their financial outcomes side by side. Use this to justify strategic decisions with data or to learn from past choices.
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
     if live:
         col1, col2 = st.columns(2)
@@ -908,7 +978,16 @@ elif page == "🔄 Counterfactual":
 # COMPANY COMPARE
 elif page == "🏢 Company Compare":
     st.markdown("<div class='section-header'>🏢 Company Comparison</div>", unsafe_allow_html=True)
-    st.markdown("<div class='section-subheader'>Benchmark Nifty 500 companies under the same crisis scenario</div>", unsafe_allow_html=True)
+    st.markdown("""
+    <div style='background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.2); border-radius:10px; padding:16px; margin-bottom:20px;'>
+        <div style='font-size:13px; color:#e2e8f0; font-weight:600; margin-bottom:8px;'>📖 What is Company Comparison?</div>
+        <div style='font-size:12px; color:#94a3b8; line-height:1.7;'>
+        Company Comparison lets you <b style='color:#f59e0b;'>benchmark up to 6 Nifty 500 companies</b> under the exact same crisis scenario simultaneously. 
+        For example: apply a 20% revenue stress and 10% cost increase to Infosys, TCS, Wipro, and HCL together — and instantly see which company 
+        is most resilient and which is most vulnerable. Perfect for investor analysis, competitive benchmarking, and sector-level stress testing.
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
     selected_companies = st.multiselect("Select Companies (max 6)", list(COMPANIES.keys()), default=list(COMPANIES.keys())[:4], max_selections=6)
     col_s1, col_s2 = st.columns(2)
@@ -953,7 +1032,17 @@ elif page == "🏢 Company Compare":
 # PRICE PREDICTION
 elif page == "🔮 Price Prediction":
     st.markdown("<div class='section-header'>🔮 Stock Price Prediction</div>", unsafe_allow_html=True)
-    st.markdown("<div class='section-subheader'>ML-powered 30-day price forecast with confidence intervals</div>", unsafe_allow_html=True)
+    st.markdown("""
+    <div style='background:rgba(236,72,153,0.08); border:1px solid rgba(236,72,153,0.2); border-radius:10px; padding:16px; margin-bottom:20px;'>
+        <div style='font-size:13px; color:#e2e8f0; font-weight:600; margin-bottom:8px;'>📖 What is Stock Price Prediction?</div>
+        <div style='font-size:12px; color:#94a3b8; line-height:1.7;'>
+        FinSight uses a <b style='color:#ec4899;'>Random Forest machine learning model</b> trained on 2 years of historical price data to forecast 
+        future stock prices. It combines technical indicators (RSI, MACD, Bollinger Bands), candlestick pattern recognition, and real-time 
+        news sentiment from Google News to generate predictions for 1, 3, or 6 months ahead. A confidence range (best case / worst case) 
+        is shown to reflect market uncertainty. <b style='color:#ec4899;'>For educational purposes only — not financial advice.</b>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
     col_settings, col_info = st.columns([1, 2])
     with col_settings:
@@ -1128,7 +1217,17 @@ elif page == "🔮 Price Prediction":
 # BENCHMARKS & RATIOS
 elif page == "📐 Benchmarks & Ratios":
     st.markdown("<div class='section-header'>📐 Benchmarks & Financial Ratios</div>", unsafe_allow_html=True)
-    st.markdown("<div class='section-subheader'>Compare company metrics against industry averages and advanced financial ratios</div>", unsafe_allow_html=True)
+    st.markdown("""
+    <div style='background:rgba(99,102,241,0.08); border:1px solid rgba(99,102,241,0.2); border-radius:10px; padding:16px; margin-bottom:20px;'>
+        <div style='font-size:13px; color:#e2e8f0; font-weight:600; margin-bottom:8px;'>📖 What is Benchmarks & Ratios?</div>
+        <div style='font-size:12px; color:#94a3b8; line-height:1.7;'>
+        This module calculates <b style='color:#6366f1;'>15+ advanced financial ratios</b> and compares the company against its industry peers. 
+        The <b style='color:#6366f1;'>Altman Z-Score</b> predicts bankruptcy risk, the <b style='color:#6366f1;'>Graham Number</b> identifies if 
+        the stock is overvalued or undervalued, and EV/EBITDA, Interest Coverage, and ROCE provide deep financial health insights. 
+        The radar chart visually shows where the company stands vs its industry average across 5 key dimensions.
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
     if live:
         industry = company_info.get("industry", "IT Services")
