@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FinSight — AI-Powered Financial Intelligence Platform</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #060818;
+    --bg2: #0a0f2e;
+    --blue: #6366f1;
+    --purple: #8b5cf6;
+    --cyan: #06b6d4;
+    --green: #10b981;
+    --amber: #f59e0b;
+    --red: #ef4444;
+    --pink: #ec4899;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --border: rgba(99,102,241,0.2);
+    --card: rgba(255,255,255,0.04);
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* NAVBAR */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(6,8,24,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .nav-logo-icon {
+    font-size: 24px;
+  }
+
+  .nav-logo-text {
+    font-size: 20px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .nav-logo-by {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white !important;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-weight: 600 !important;
+    transition: all 0.2s !important;
+    box-shadow: 0 4px 15px rgba(99,102,241,0.3);
+  }
+
+  .nav-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 25px rgba(99,102,241,0.5) !important;
+    color: white !important;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 100px 40px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 50% 50%, rgba(99,102,241,0.15) 0%, rgba(139,92,246,0.08) 30%, transparent 70%);
+    animation: heroGlow 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes heroGlow {
+    0% { transform: scale(1) rotate(0deg); }
+    100% { transform: scale(1.1) rotate(5deg); }
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(99,102,241,0.1);
+    border: 1px solid rgba(99,102,241,0.3);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 13px;
+    color: #a5b4fc;
+    font-weight: 500;
+    margin-bottom: 32px;
+    animation: fadeInDown 0.6s ease;
+  }
+
+  .hero-badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+
+  .hero-title {
+    font-size: clamp(40px, 7vw, 80px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    animation: fadeInUp 0.8s ease;
+  }
+
+  .hero-title .gradient {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 40%, #06b6d4 80%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(16px, 2.5vw, 22px);
+    color: var(--muted);
+    max-width: 700px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+    font-weight: 400;
+    animation: fadeInUp 0.9s ease;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeInUp 1s ease;
+    margin-bottom: 60px;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    padding: 14px 32px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(99,102,241,0.4);
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(99,102,241,0.6);
+  }
+
+  .btn-secondary {
+    background: rgba(255,255,255,0.06);
+    color: var(--text);
+    padding: 14px 32px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.1);
+    transform: translateY(-2px);
+  }
+
+  /* STATS */
+  .stats {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeInUp 1.1s ease;
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-value {
+    font-size: 32px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #6366f1, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+  }
+
+  .stat-divider {
+    width: 1px;
+    background: var(--border);
+    align-self: stretch;
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 80px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--blue);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 800;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .section-subtitle {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 600px;
+    line-height: 1.7;
+    margin-bottom: 48px;
+  }
+
+  /* PROBLEM SECTION */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+
+  .problem-card {
+    background: rgba(239,68,68,0.06);
+    border: 1px solid rgba(239,68,68,0.2);
+    border-radius: 12px;
+    padding: 24px;
+  }
+
+  .solution-card {
+    background: rgba(16,185,129,0.06);
+    border: 1px solid rgba(16,185,129,0.2);
+    border-radius: 12px;
+    padding: 24px;
+  }
+
+  .ps-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .ps-item {
+    font-size: 13px;
+    color: var(--muted);
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    line-height: 1.5;
+  }
+
+  .ps-item:last-child { border-bottom: none; }
+
+  /* MODULES GRID */
+  .modules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+  }
+
+  .module-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .module-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .module-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(99,102,241,0.4);
+    box-shadow: 0 12px 40px rgba(99,102,241,0.15);
+  }
+
+  .module-card:hover::before { opacity: 1; }
+
+  .module-icon {
+    font-size: 32px;
+    margin-bottom: 16px;
+  }
+
+  .module-title {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+
+  .module-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .module-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+    background: rgba(99,102,241,0.1);
+    color: #a5b4fc;
+    border: 1px solid rgba(99,102,241,0.2);
+  }
+
+  /* TECH STACK */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+
+  .tech-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s;
+  }
+
+  .tech-card:hover {
+    border-color: rgba(99,102,241,0.4);
+    transform: translateY(-2px);
+  }
+
+  .tech-icon { font-size: 28px; margin-bottom: 10px; }
+  .tech-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .tech-purpose { font-size: 12px; color: var(--muted); }
+
+  /* CTA SECTION */
+  .cta-section {
+    text-align: center;
+    padding: 80px 40px;
+    background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.05));
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cta-title {
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 800;
+    margin-bottom: 16px;
+  }
+
+  .cta-subtitle {
+    font-size: 16px;
+    color: var(--muted);
+    margin-bottom: 40px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 48px 40px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .footer-logo {
+    font-size: 18px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--text); }
+
+  .footer-copy {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* COMPARISON TABLE */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .compare-table th {
+    padding: 14px 20px;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: left;
+    background: rgba(99,102,241,0.15);
+    color: #a5b4fc;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .compare-table td {
+    padding: 14px 20px;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    color: var(--muted);
+  }
+
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table tr:nth-child(odd) td { background: rgba(255,255,255,0.02); }
+  .compare-table tr:hover td { background: rgba(99,102,241,0.06); }
+
+  .check { color: var(--green); font-weight: 700; }
+  .cross { color: var(--red); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .problem-grid { grid-template-columns: 1fr; }
+    section { padding: 60px 20px; }
+    .stats { gap: 24px; }
+    .stat-divider { display: none; }
+    footer { flex-direction: column; text-align: center; }
+  }
+
+  /* GLOW ORBS */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .orb-1 {
+    width: 400px; height: 400px;
+    background: #6366f1;
+    top: -100px; left: -100px;
+    animation: orbFloat1 12s ease-in-out infinite;
+  }
+
+  .orb-2 {
+    width: 300px; height: 300px;
+    background: #06b6d4;
+    bottom: 20%; right: -80px;
+    animation: orbFloat2 10s ease-in-out infinite;
+  }
+
+  @keyframes orbFloat1 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(60px, 40px); }
+  }
+
+  @keyframes orbFloat2 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-40px, -60px); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Background orbs -->
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-logo">
+    <span class="nav-logo-icon">⚡</span>
+    <div>
+      <div class="nav-logo-text">FinSight</div>
+      <div class="nav-logo-by">by Nikhil Singh</div>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#modules">Modules</a></li>
+    <li><a href="#tech">Tech Stack</a></li>
+    <li><a href="#compare">Why FinSight</a></li>
+    <li><a href="https://finsight-gjcwxba4rp6y2b49hgkghf.streamlit.app" target="_blank" class="nav-cta">🚀 Launch App</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div style="position:relative; z-index:1;">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      Live Data from NSE • 500 Companies • AI-Powered
+    </div>
+
+    <h1 class="hero-title">
+      Financial Intelligence<br>
+      <span class="gradient">Powered by AI</span>
+    </h1>
+
+    <p class="hero-subtitle">
+      FinSight is a real-time financial stress testing platform for Indian companies.
+      Simulate crises, get AI boardroom analysis, predict stock prices, and generate
+      professional reports — in seconds, not weeks.
+    </p>
+
+    <div class="hero-buttons">
+      <a href="https://finsight-gjcwxba4rp6y2b49hgkghf.streamlit.app" target="_blank" class="btn-primary">
+        🚀 Launch FinSight
+      </a>
+      <a href="https://github.com/160chauhannikhil/FinSight" target="_blank" class="btn-secondary">
+        ⭐ View on GitHub
+      </a>
+    </div>
+
+    <div class="stats">
+      <div class="stat-item">
+        <div class="stat-value">500+</div>
+        <div class="stat-label">NSE Companies</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-value">15+</div>
+        <div class="stat-label">Financial Ratios</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-value">6</div>
+        <div class="stat-label">AI Agents</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-value">8</div>
+        <div class="stat-label">Analysis Modules</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-value">Free</div>
+        <div class="stat-label">Always</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLEM vs SOLUTION -->
+<section id="features">
+  <div class="section-label">The Problem</div>
+  <h2 class="section-title">Why FinSight Exists</h2>
+  <p class="section-subtitle">
+    When financial crises hit, management teams have no fast, intelligent tool to understand the impact.
+    FinSight changes that.
+  </p>
+
+  <div class="problem-grid">
+    <div class="problem-card">
+      <div class="ps-title" style="color:#ef4444;">❌ Without FinSight</div>
+      <div class="ps-item"><span>⏰</span> 3-5 days to build a stress test in Excel</div>
+      <div class="ps-item"><span>💸</span> ₹50-100 lakh for consultant analysis</div>
+      <div class="ps-item"><span>📊</span> Outdated static data, months old</div>
+      <div class="ps-item"><span>👤</span> One perspective from one advisor</div>
+      <div class="ps-item"><span>🔍</span> Manual benchmarking takes weeks</div>
+      <div class="ps-item"><span>📄</span> 200-page PDF report, hard to act on</div>
+    </div>
+    <div class="solution-card">
+      <div class="ps-title" style="color:#10b981;">✅ With FinSight</div>
+      <div class="ps-item"><span>⚡</span> Stress test in 30 seconds with sliders</div>
+      <div class="ps-item"><span>🆓</span> Completely free, always</div>
+      <div class="ps-item"><span>📡</span> Live NSE data, updates every 5 minutes</div>
+      <div class="ps-item"><span>🤖</span> 6 AI agents debate from all perspectives</div>
+      <div class="ps-item"><span>📐</span> Instant benchmark vs 500 companies</div>
+      <div class="ps-item"><span>📋</span> One-click professional PDF report</div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULES -->
+<section id="modules" style="padding-top:0;">
+  <div class="section-label">8 Powerful Modules</div>
+  <h2 class="section-title">Everything You Need</h2>
+  <p class="section-subtitle">From live dashboards to AI boardrooms — FinSight covers the complete financial analysis workflow.</p>
+
+  <div class="modules-grid">
+    <div class="module-card" style="border-top: 2px solid #6366f1;">
+      <div class="module-icon">📊</div>
+      <div class="module-title">Executive Dashboard</div>
+      <div class="module-desc">Real-time KPIs, P&L charts, financial radar, resilience gauge (0-100), and stock price history with moving averages. Live data badge shows freshness.</div>
+      <div class="module-tags">
+        <span class="tag">Live Data</span>
+        <span class="tag">Resilience Score</span>
+        <span class="tag">P&L Chart</span>
+      </div>
+    </div>
+
+    <div class="module-card" style="border-top: 2px solid #ef4444;">
+      <div class="module-icon">⚡</div>
+      <div class="module-title">Crisis Simulator</div>
+      <div class="module-desc">Apply 4 stress parameters — Revenue, Cost, Interest Rate, Debt — and see instant financial impact. 6 industry templates including COVID Shock and RBI Rate Hike.</div>
+      <div class="module-tags">
+        <span class="tag">Revenue Stress</span>
+        <span class="tag">Cost Pressure</span>
+        <span class="tag">6 Templates</span>
+      </div>
+    </div>
+
+    <div class="module-card" style="border-top: 2px solid #10b981;">
+      <div class="module-icon">🧪</div>
+      <div class="module-title">Resilience Lab</div>
+      <div class="module-desc">Tests 6 management interventions — from cost cutting to equity raise — and ranks which strategy gives the best recovery. Best option auto-highlighted.</div>
+      <div class="module-tags">
+        <span class="tag">6 Interventions</span>
+        <span class="tag">Auto Ranking</span>
+        <span class="tag">Recovery Score</span>
+      </div>
+    </div>
+
+    <div class="module-card" style="border-top: 2px solid #8b5cf6;">
+      <div class="module-icon">🤖</div>
+      <div class="module-title">AI Boardroom</div>
+      <div class="module-desc">6 specialized AI agents (CFO, Risk, Strategy, Treasury, Challenger, CEO) analyze and debate the best strategy. Human makes the final decision.</div>
+      <div class="module-tags">
+        <span class="tag">6 AI Agents</span>
+        <span class="tag">Claude AI</span>
+        <span class="tag">Human Decision</span>
+      </div>
+    </div>
+
+    <div class="module-card" style="border-top: 2px solid #06b6d4;">
+      <div class="module-icon">🔄</div>
+      <div class="module-title">Counterfactual Analysis</div>
+      <div class="module-desc">Compare two alternative strategies side by side. "Should we cut costs or invest in growth?" — FinSight answers with data and AI reasoning.</div>
+      <div class="module-tags">
+        <span class="tag">Strategy A vs B</span>
+        <span class="tag">AI Analysis</span>
+        <span class="tag">Side by Side</span>
+      </div>
+    </div>
+
+    <div class="module-card" style="border-top: 2px solid #f59e0b;">
+      <div class="module-icon">🏢</div>
+      <div class="module-title">Company Comparison</div>
+      <div class="module-desc">Benchmark up to 6 Nifty 500 companies under the same crisis scenario simultaneously. Resilience ranking shows which company is strongest.</div>
+      <div class="module-tags">
+        <span class="tag">6 Companies</span>
+        <span class="tag">500 NSE</span>
+        <span class="tag">Ranking</span>
+      </div>
+    </div>
+
+    <div class="module-card" style="border-top: 2px solid #ec4899;">
+      <div class="module-icon">🔮</div>
+      <div class="module-title">Stock Price Prediction</div>
+      <div class="module-desc">ML model (Random Forest) trained on 2 years of data. Combines 8 technical indicators, 7 candlestick patterns, and news sentiment for 1-6 month forecasts.</div>
+      <div class="module-tags">
+        <span class="tag">Random Forest</span>
+        <span class="tag">RSI · MACD · BB</span>
+        <span class="tag">News Sentiment</span>
+      </div>
+    </div>
+
+    <div class="module-card" style="border-top: 2px solid #6366f1;">
+      <div class="module-icon">📐</div>
+      <div class="module-title">Benchmarks & Ratios</div>
+      <div class="module-desc">15+ advanced ratios including Altman Z-Score, Graham Number, EV/EBITDA, ROCE, Interest Coverage — with industry benchmark comparison across 10 sectors.</div>
+      <div class="module-tags">
+        <span class="tag">Altman Z-Score</span>
+        <span class="tag">Graham Number</span>
+        <span class="tag">10 Industries</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH STACK -->
+<section id="tech">
+  <div class="section-label">Technology</div>
+  <h2 class="section-title">Built with Modern Stack</h2>
+  <p class="section-subtitle">100% Python — no JavaScript, no frameworks. Just powerful libraries doing serious work.</p>
+
+  <div class="tech-grid">
+    <div class="tech-card">
+      <div class="tech-icon">🐍</div>
+      <div class="tech-name">Python</div>
+      <div class="tech-purpose">Core language</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">🎯</div>
+      <div class="tech-name">Streamlit</div>
+      <div class="tech-purpose">Web interface</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">📈</div>
+      <div class="tech-name">Yahoo Finance</div>
+      <div class="tech-purpose">Live NSE data</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">🤖</div>
+      <div class="tech-name">Claude AI</div>
+      <div class="tech-purpose">6 AI agents</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">🧠</div>
+      <div class="tech-name">Scikit-learn</div>
+      <div class="tech-purpose">ML prediction</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">📊</div>
+      <div class="tech-name">Plotly</div>
+      <div class="tech-purpose">Interactive charts</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">📰</div>
+      <div class="tech-name">Google News</div>
+      <div class="tech-purpose">Sentiment analysis</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">📄</div>
+      <div class="tech-name">ReportLab</div>
+      <div class="tech-purpose">PDF export</div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section id="compare" style="padding-top:0;">
+  <div class="section-label">Why FinSight</div>
+  <h2 class="section-title">FinSight vs Traditional Tools</h2>
+  <p class="section-subtitle">See how FinSight compares to conventional financial analysis approaches.</p>
+
+  <div style="border-radius:16px; overflow:hidden; border:1px solid var(--border);">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Excel / Manual</th>
+          <th>Consultant</th>
+          <th style="color:#6366f1;">FinSight ⚡</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Time to stress test</td>
+          <td class="cross">3-5 days</td>
+          <td class="cross">1-2 weeks</td>
+          <td class="check">30 seconds ✓</td>
+        </tr>
+        <tr>
+          <td>Cost</td>
+          <td>Free (your time)</td>
+          <td class="cross">₹50-100L</td>
+          <td class="check">Free ✓</td>
+        </tr>
+        <tr>
+          <td>Live market data</td>
+          <td class="cross">❌ Manual update</td>
+          <td class="cross">❌ Periodic</td>
+          <td class="check">✓ Every 5 min</td>
+        </tr>
+        <tr>
+          <td>Companies covered</td>
+          <td class="cross">1 at a time</td>
+          <td class="cross">Selected only</td>
+          <td class="check">✓ 500 NSE</td>
+        </tr>
+        <tr>
+          <td>AI-powered analysis</td>
+          <td class="cross">❌</td>
+          <td class="cross">❌</td>
+          <td class="check">✓ 6 AI agents</td>
+        </tr>
+        <tr>
+          <td>Stock price prediction</td>
+          <td class="cross">❌</td>
+          <td class="cross">❌</td>
+          <td class="check">✓ ML model</td>
+        </tr>
+        <tr>
+          <td>Industry benchmarking</td>
+          <td class="cross">❌ Manual</td>
+          <td>Limited</td>
+          <td class="check">✓ 10 sectors</td>
+        </tr>
+        <tr>
+          <td>PDF report</td>
+          <td class="cross">Manual formatting</td>
+          <td>200+ pages</td>
+          <td class="check">✓ 1 click</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2 class="cta-title">Ready to Analyze?</h2>
+  <p class="cta-subtitle">Join analysts and MBA students using FinSight to make faster, smarter financial decisions.</p>
+  <div class="hero-buttons">
+    <a href="https://finsight-gjcwxba4rp6y2b49hgkghf.streamlit.app" target="_blank" class="btn-primary">
+      🚀 Launch FinSight Free
+    </a>
+    <a href="https://github.com/160chauhannikhil/FinSight" target="_blank" class="btn-secondary">
+      📂 View Source Code
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">⚡ FinSight</div>
+    <div style="font-size:12px; color:var(--muted); margin-top:4px;">by Nikhil Singh · MBA, NIT Warangal</div>
+  </div>
+  <ul class="footer-links">
+    <li><a href="https://finsight-gjcwxba4rp6y2b49hgkghf.streamlit.app" target="_blank">Launch App</a></li>
+    <li><a href="https://github.com/160chauhannikhil/FinSight" target="_blank">GitHub</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#modules">Modules</a></li>
+  </ul>
+  <div class="footer-copy">
+    © 2026 FinSight · For educational purposes only · Not financial advice
+  </div>
+</footer>
+
+</body>
+</html>
